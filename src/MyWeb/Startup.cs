@@ -13,7 +13,6 @@ namespace MyWeb {
         public IConfiguration Configuration { get; }
 
         public void ConfigureServices(IServiceCollection services) {
-
             services.AddControllers();
             services.AddSwaggerDocument();
         }
@@ -21,19 +20,20 @@ namespace MyWeb {
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env) {
             if (env.IsDevelopment()) {
                 app.UseDeveloperExceptionPage();
-                app.UseOpenApi(options => {
-                    options.Path = "/document/api/swagger.json";
-                });
-                app.UseSwaggerUi3(options => {
-                    options.Path = "/document/api";
-                    options.DocumentPath = "/document/api/swagger.json";
-                });
             }
 
             app.UseRouting();
             app.UseAuthorization();
             app.UseEndpoints(endpoints => {
                 endpoints.MapControllers();
+            });
+
+            app.UseOpenApi(options => {
+                options.Path = "/document/api/swagger.json";
+            });
+            app.UseSwaggerUi3(options => {
+                options.Path = "/document/api";
+                options.DocumentPath = "/document/api/swagger.json";
             });
         }
     }
